@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>W3 Hostel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <div class="logo">W3 Hostel</div>
+  <nav>
+    <a href="index.html">歡迎</a>
+    <a href="about.html">Ｗ3 = 3W</a>
+    <a href="booking.html">房間與設施</a>
+    <a href="contact.html">聯絡與交通</a>
+  </nav>
+</header>
+
+<div class="hero-slider">
+
+  <div class="slide active" style="background-image: url('images/1.jpg')">
+    <div class="overlay">
+      <h1>W3 Hostel</h1>
+      <p>Welcome · Wellness · White Aesthetic</p>
+    </div>
+  </div>
+
+  <div class="slide" style="background-image: url('images/2.jpg')">
+    <div class="overlay">
+      <h1>Minimal Living</h1>
+      <p>純白與光影的空間</p>
+    </div>
+  </div>
+
+  <div class="slide" style="background-image: url('images/3.jpg')">
+    <div class="overlay">
+      <h1>Stay Calm</h1>
+      <p>舒適・安靜・放鬆</p>
+    </div>
+  </div>
+
+  <div class="dots">
+    <span onclick="goSlide(0)"></span>
+    <span onclick="goSlide(1)"></span>
+    <span onclick="goSlide(2)"></span>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 W3 Hostel
+  <label for="language-switcher">🌎</label>
+<select id="language-switcher" onchange="window.location.href = this.value;">
+  <option value="index-en.html" selected>English</option>
+  <option value="index-kr.html">한국어</option>
+  <option value="index-ja.html">日本語</option>
+</select>
+
+</footer>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dots span");
+
+function showSlide(index) {
+  slides.forEach(s => s.classList.remove("active"));
+  dots.forEach(d => d.classList.remove("active"));
+  slides[index].classList.add("active");
+  dots[index].classList.add("active");
+}
+
+function nextSlide() {
+  current = (current + 1) % slides.length;
+  showSlide(current);
+}
+
+function goSlide(index) {
+  current = index;
+  showSlide(current);
+}
+
+setInterval(nextSlide, 5000);
+showSlide(0);
+
+let startX = 0;
+document.querySelector(".hero-slider").addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+document.querySelector(".hero-slider").addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+  if (startX - endX > 50) nextSlide();
+  if (endX - startX > 50) {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+  }
+});
+</script>
+
+</body>
+
+</html>
